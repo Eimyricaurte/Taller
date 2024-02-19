@@ -5,15 +5,27 @@ import java.util.ArrayList;
 
 public class HandlingRunner {
 
+    private ArrayList<Runner> runners;
+
     public HandlingRunner() {
+        this.runners = new ArrayList<>();
     }
 
     public Runner findRunner(int idRunner){
+        for (Runner runner : runners){
+            if (idRunner == runner.getIdRunner()){
+                return runner;
+            }
+        }
         return null;
     }
 
     public boolean addRunner(Runner runner){
-        return true;
+        if( findRunner(runner.getIdRunner()) == null ){
+            runners.add( runner );
+            return true;
+        }
+        return false;
     }
 
     public Runner getChampion(){
