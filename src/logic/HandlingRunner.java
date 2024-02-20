@@ -29,11 +29,27 @@ public class HandlingRunner {
     }
 
     public Runner getChampion(){
-        return null;
+
+        Runner champion = runners.get(0);
+        for (int i = 1; i < runners.size(); i++){
+            if (runners.get(i).getTotalTimeRace().isBefore(champion.getTotalTimeRace())) {
+                champion = runners.get(i);
+            }
+        }
+        return champion;
     }
 
     public LocalTime getAverage(){
-        return null;
+        int seconds = 0;
+
+        for (Runner runner : runners) {
+            seconds += runner.getTotalTimeRace().toSecondOfDay();
+        }
+
+        int averageSeconds = seconds / runners.size();
+        LocalTime average = LocalTime.ofSecondOfDay(averageSeconds);
+
+        return average;
     }
 
     public Runner getRunnerSlow(){
