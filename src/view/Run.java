@@ -6,6 +6,7 @@ import logic.Runner;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -13,28 +14,29 @@ import java.util.Scanner;
  *
  */
 public class Run {
-    private static HandlingRunner handlingRunner;
-    public static Run run = new Run();
+    private HandlingRunner handlingRunner;
+    public static Run run;
+    private Scanner sc;
 
     /**
      *
      * @param args
      */
     public static void main(String[] args) {
-        run.menu();
+        run = new Run();
+        run.sc = new Scanner(System.in);
+        run.handlingRunner = new HandlingRunner();
 
+        run.menu();
     }
-    Scanner sc = new Scanner(System.in);
 
     /**
      *
      */
-    public void menu(){
-        boolean state = true;
-        try {
-            while (state) {
-                handlingRunner = new HandlingRunner();
-                int option;
+    private void menu(){
+        char option=' ';
+            while (option!='8') {
+
                     System.out.println("******************* MENU *******************\n" +
                             "1. Add Runner\n" +
                             "2. Find Runner\n" +
@@ -45,48 +47,44 @@ public class Run {
                             "7. Show Runners\n" +
                             "8. Exit");
 
-                    option = sc.nextInt();
+                    option = sc.next().charAt(0);
                     switch (option) {
-                        case 1:
+                        case '1':
                             addRunner();
                             break;
-                        case 2:
-                            handlingRunner.getRunners();
+                        case '2':
                             findRunner();
                             break;
-                        case 3:
-                            handlingRunner.getChampion();
+                        case '3':
+                            showChampion();
                             break;
-                        case 4:
-                            handlingRunner.getAverage();
+                        case '4':
+                            getAverage();
                             break;
-                        case 5:
-                            handlingRunner.getRunnerSlow();
+                        case '5':
+                            getRunnersSlow();
                             break;
-                        case 6:
-                            handlingRunner.showClasification();
+                        case '6':
+                            showClassification();
                             break;
-                        case 7:
-                            handlingRunner.getRunners();
-                        case 8:
-                            state = false;
+                        case '7':
+                            getRunners();
+                        case '8':
+                            System.out.println("Exit");
                             break;
                         default:
                             System.err.println("Invalid Option");
                     }
             }
-        }catch (Exception e){
-            System.err.println("Invalid option");
-        }
     }
 
     /**
      *
      */
-    public void addRunner(){
-        boolean state = true;
+    private void addRunner(){
+        char add = ' ';
         try {
-            while (state) {
+            while (true) {
                 System.out.println("Enter the runner ID: ");
                 int id = sc.nextInt();
                 sc.nextLine();
@@ -116,13 +114,10 @@ public class Run {
 
                 handlingRunner.addRunner(new Runner(id, name, height, width, localDate, localTime));
 
-                getRunners();
-
-                System.out.println("Do you want to add another runner: enter 1. No, or 2. Yes");
-                int add = sc.nextInt();
-                if (add == 1) {
-                    state = false;
-                    menu();
+                System.out.println("Do you want to add another runner: enter 1. No, or Other. Yes");
+                add = sc.next().charAt(0);
+                if (add == '1') {
+                    break;
                 }
             }
         }catch (Exception e){
@@ -133,30 +128,86 @@ public class Run {
     /**
      *
      */
-    public void findRunner() {
-        boolean state = true;
+    private void findRunner() {
+        int id = 0;
+        char option = ' ';
         try {
-            while (state) {
+            while (true) {
                 System.out.println("Enter the ID of the candidate you want to find for: ");
-                int id = sc.nextInt();
-                getRunners();
+                id = sc.nextInt();
+
                 System.out.println(handlingRunner.findRunner(id));
 
-                System.out.println("Do you want to find another runner? enter 1. No, or 2. Yes");
-                int option = sc.nextInt();
-                if (option == 1) {
-                    state = false;
+                System.out.println("Do you want to find another runner? enter 1. No, or Other. Yes");
+                option = sc.next().charAt(0);
+                if (option == '1' ) {
+                    break;
                 }
             }
         }catch (Exception e){
-            System.err.println("Invalid Option");
+            System.err.println("invalid data type");
         }
     }
 
     /**
      *
      */
-    public void getRunners(){
+    private void showChampion(){
+        Runner champion = handlingRunner.getChampion();
+        if (champion == null){
+            System.out.println("There are no registered players \n");
+        }else {
+            System.out.printf("The champion is %d %s \n", champion.getIdRunner(), champion.getNameRunner());
+        }
+    }
+
+    /**
+     *
+     */
+    private void getAverage(){
+        LocalTime average = handlingRunner.getAverage();
+        if (average == null){
+            System.out.println("There are no registered players \n");
+        }else {
+            System.out.println("The average is " + average);
+        }
+    }
+
+    /**
+     *
+     */
+    private void getRunnersSlow(){
+        Runner slow = handlingRunner.getChampion();
+        if (slow == null){
+            System.out.println("There are no registered players \n");
+        }else {
+            System.out.printf("The runner slow is %d %s \n", slow.getIdRunner(), slow.getNameRunner());
+        }
+    }
+    /**
+     *
+     */
+    private void showClassification(){
+        String result = String.format("%-7s %-19s %-11s %-11s %-19s %s ",
+                "ID", "Name Runner",  "Height", "Width", "Birthday", "Total Time Race");
+
+        for (Runner runners : handlingRunner.showClassification()){
+            result = String.format("%s \n%-4d \t%-18s \t%-10.1f \t%-10.2f\t%-15s \t%s ",
+                    result,
+                    runners.getIdRunner(),
+                    runners.getNameRunner(),
+                    runners.getHeight(),
+                    runners.getWidth(),
+                    runners.getBirthday().toString(),
+                    runners.getTotalTimeRace().toString());
+        }
+        System.out.println(result);
+    }
+
+    /**
+     *
+     */
+    private void getRunners(){
         handlingRunner.getRunners().stream().forEach(
                 runner -> {
                     System.out.println(runner.toString());

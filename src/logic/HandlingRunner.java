@@ -26,6 +26,7 @@ public class HandlingRunner {
      * @return returns the object if it exists, if not, returns null
      */
     public Runner findRunner(int idRunner) {
+
         for (Runner runner : runners) {
             if (idRunner == runner.getIdRunner()) {
                 return runner;
@@ -40,6 +41,7 @@ public class HandlingRunner {
      * @return If the runner ID already exists it returns false, otherwise it returns true.
      */
     public boolean addRunner(Runner runner){
+
         if( findRunner(runner.getIdRunner()) == null ){
             runners.add( runner );
             return true;
@@ -100,25 +102,13 @@ public class HandlingRunner {
      * Method that shows the classification of runners from first to last
      * @return returns the runners' data in tabular form
      */
-    public String showClasification(){
+    public ArrayList<Runner> showClassification(){
+
         ArrayList<Runner> runner = getRunners();
 
         runner.sort(Comparator.comparing(Runner::getTotalTimeRace));
 
-        String result = String.format("%-7s %-19s %-11s %-11s %-19s %s ",
-                "ID", "Name Runner",  "Height", "Width", "Birthday", "Total Time Race");
-
-        for (Runner runners : runner){
-            result = String.format("%s \n%-4d \t%-18s \t%-10.1f \t%-10.2f\t%-15s \t%s ",
-                    result,
-                    runners.getIdRunner(),
-                    runners.getNameRunner(),
-                    runners.getHeight(),
-                    runners.getWidth(),
-                    runners.getBirthday().toString(),
-                    runners.getTotalTimeRace().toString());
-        }
-        return result;
+        return runner;
     }
 
     /**

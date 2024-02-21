@@ -66,13 +66,13 @@ class HandlingRunnerTest {
     void showClasification() {
         setUp();
         HandlingRunner temp = handlingRunner;
-        assertEquals(handlingRunner.showClasification(), temp.showClasification());
+        assertEquals(handlingRunner.showClassification(), temp.showClassification());
 
         temp = new HandlingRunner();
         temp.addRunner(new Runner(231,"Carlos Saenz", 1.78, 60, LocalDate.of(2003, Month.SEPTEMBER,01), LocalTime.parse("02:40")));
         temp.addRunner(new Runner(123,"Camilo Montaña", 1.85, 72, LocalDate.of(2004, Month.APRIL,02), LocalTime.parse("02:20")));
         temp.addRunner(new Runner(31,"Bibian  Corredor", 1.60, 53, LocalDate.of(2005, Month.FEBRUARY,13), LocalTime.parse("02:30")));
-        assertNotEquals(handlingRunner.showClasification(), temp.showClasification());
+        assertNotEquals(handlingRunner.showClassification(), temp.showClassification());
     }
 
     @Test
