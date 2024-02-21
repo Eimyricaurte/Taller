@@ -7,27 +7,27 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
- *
+ * Class that Manages Race Behavior
  */
 public class HandlingRunner {
 
     private ArrayList<Runner> runners;
 
     /**
-     *
+     * Constructor that allows creating the instance of objects of this class
      */
     public HandlingRunner() {
         this.runners = new ArrayList<>();
     }
 
     /**
-     *
-     * @param idRunner
-     * @return
+     * Method that allows you to find for a broker by his id
+     * @param idRunner receives the runner's id
+     * @return returns the object if it exists, if not, returns null
      */
-    public Runner findRunner(int idRunner){
-        for (Runner runner : runners){
-            if (idRunner == runner.getIdRunner()){
+    public Runner findRunner(int idRunner) {
+        for (Runner runner : runners) {
+            if (idRunner == runner.getIdRunner()) {
                 return runner;
             }
         }
@@ -35,9 +35,9 @@ public class HandlingRunner {
     }
 
     /**
-     *
-     * @param runner
-     * @return
+     * Method that allows adding a runner
+     * @param runner receives information of the runner (object)
+     * @return If the runner ID already exists it returns false, otherwise it returns true.
      */
     public boolean addRunner(Runner runner){
         if( findRunner(runner.getIdRunner()) == null ){
@@ -48,9 +48,10 @@ public class HandlingRunner {
     }
 
     /**
-     * Retorna la instancia del corredor ganador de la carrera, el que ha invertido el menor tiempo en
-     * terminar la carrera
-     * @return
+     * Method that returns the instance of the winning runner of the race, the one who has invested the least time in
+     * finish the race
+     *
+     * @return The instance of the winning runner
      */
     public Runner getChampion(){
 
@@ -64,8 +65,8 @@ public class HandlingRunner {
     }
 
     /**
-     * Retorna el promedio de tiempo de carrera de los corredores
-     * @return
+     * Method that calculates the average running time of runners
+     * @return the average running time of the runners
      */
     public LocalTime getAverage(){
         int seconds = 0;
@@ -81,8 +82,8 @@ public class HandlingRunner {
     }
 
     /**
-     * Retorna el corredor más lento de la carrera, el de mayor tiempo gastado
-     * @return
+     * Method that shows the slowest runner in the race, the one with the most time spent
+     * @return the slowest runner in the race returns
      */
     public Runner getRunnerSlow(){
 
@@ -96,9 +97,8 @@ public class HandlingRunner {
     }
 
     /**
-     * Retorna un String con la clasificación de corredores del primero al último, la salida debe ser
-     * formateada para visualizar los datos en forma tabuladas
-     * @return
+     * Method that shows the classification of runners from first to last
+     * @return returns the runners' data in tabular form
      */
     public String showClasification(){
         ArrayList<Runner> runner = getRunners();
@@ -106,15 +106,15 @@ public class HandlingRunner {
         runner.sort(Comparator.comparing(Runner::getTotalTimeRace));
 
         String result = String.format("%-7s %-19s %-11s %-11s %-19s %s ",
-                "ID", "Name Runner", "Width", "Height", "Birthday", "Total Time Race");
+                "ID", "Name Runner",  "Height", "Width", "Birthday", "Total Time Race");
 
         for (Runner runners : runner){
             result = String.format("%s \n%-4d \t%-18s \t%-10.1f \t%-10.2f\t%-15s \t%s ",
                     result,
                     runners.getIdRunner(),
                     runners.getNameRunner(),
-                    runners.getWidth(),
                     runners.getHeight(),
+                    runners.getWidth(),
                     runners.getBirthday().toString(),
                     runners.getTotalTimeRace().toString());
         }
@@ -122,8 +122,8 @@ public class HandlingRunner {
     }
 
     /**
-     * Retorna el arreglo de los corredores
-     * @return
+     * Shows the arrangement of the corridors
+     * @return the array
      */
     public ArrayList<Runner> getRunners(){
 

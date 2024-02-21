@@ -134,6 +134,10 @@ public class Runner {
         this.totalTimeRace = totalTimeRace;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Runner{" +
