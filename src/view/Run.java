@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- *
+ * Class that calls the handling methods and shows the operation of the program
  */
 public class Run {
     private HandlingRunner handlingRunner;
@@ -19,7 +19,7 @@ public class Run {
     private Scanner sc;
 
     /**
-     *
+     * Shows all the program
      * @param args
      */
     public static void main(String[] args) {
@@ -31,7 +31,7 @@ public class Run {
     }
 
     /**
-     *
+     * Shows the menu with the options of actions that the user can realize
      */
     private void menu(){
         char option=' ';
@@ -69,6 +69,7 @@ public class Run {
                             break;
                         case '7':
                             getRunners();
+                            break;
                         case '8':
                             System.out.println("Exit");
                             break;
@@ -79,7 +80,7 @@ public class Run {
     }
 
     /**
-     *
+     * Asks the user for the information of the runner they want to add
      */
     private void addRunner(){
         char add = ' ';
@@ -126,14 +127,14 @@ public class Run {
     }
 
     /**
-     *
+     * Asks the user for the ID of the runner they want to find
      */
     private void findRunner() {
         int id = 0;
         char option = ' ';
         try {
             while (true) {
-                System.out.println("Enter the ID of the candidate you want to find for: ");
+                System.out.println("Enter the ID of the candidate you want to find: ");
                 id = sc.nextInt();
 
                 System.out.println(handlingRunner.findRunner(id));
@@ -150,7 +151,7 @@ public class Run {
     }
 
     /**
-     *
+     * Verifies if there are runners and if there are, shows the runner with the fastest time
      */
     private void showChampion(){
         Runner champion = handlingRunner.getChampion();
@@ -162,7 +163,7 @@ public class Run {
     }
 
     /**
-     *
+     * Verifies if there are runners and if there are, shows the average of the times of the runners
      */
     private void getAverage(){
         LocalTime average = handlingRunner.getAverage();
@@ -174,10 +175,10 @@ public class Run {
     }
 
     /**
-     *
+     * Verifies if there are runners and if there are, shows the runner with the slowest time
      */
     private void getRunnersSlow(){
-        Runner slow = handlingRunner.getChampion();
+        Runner slow = handlingRunner.getRunnerSlow();
         if (slow == null){
             System.out.println("There are no registered players \n");
         }else {
@@ -185,7 +186,7 @@ public class Run {
         }
     }
     /**
-     *
+     * Shows the classification of the race in a table, ordered from fastest to slowest
      */
     private void showClassification(){
         String result = String.format("%-7s %-19s %-11s %-11s %-19s %s ",
@@ -205,7 +206,7 @@ public class Run {
     }
 
     /**
-     *
+     * Shows a table with all the runners and their information
      */
     private void getRunners(){
         handlingRunner.getRunners().stream().forEach(
